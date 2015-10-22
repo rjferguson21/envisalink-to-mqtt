@@ -1,0 +1,20 @@
+{
+  "name": "envisalink-to-mqtt",
+  "version": "1.0.0",
+  "dependencies": {
+    "eversocket": "0.0.3",
+    "lodash": "^3.10.1",
+    "mqtt": "^0.3.13",
+    "mqtt-handler": "git://github.com/rjferguson21/mqtt-handler.git#master",
+    "yargs": "^3.29.0"
+  },
+  "scripts": {
+    "test": "jasmine-node --autotest --growl --coffee spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rjferguson21/envisalink-to-mqtt.git"
+  },
+  "author": "",
+  "license": "ISC"
+}

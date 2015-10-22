@@ -2,7 +2,6 @@ yargs = require('yargs').string('envisalink-password').argv
 mqtt = require 'mqtt'
 nap = require './lib/nodealarmproxy.js'
 config = require('./conf/config')
-client = require('./mqtt').get()
 plugin_name = 'envisalink'
 
 if yargs["envisalink-host"]?
@@ -22,6 +21,8 @@ else
 
 if yargs["mqtt-port"]?
   config.mqtt.port = yargs["mqtt-port"]
+
+client = require('./mqtt').get()
 
 initialize = ->
   # Envisalink MQTT Proxy

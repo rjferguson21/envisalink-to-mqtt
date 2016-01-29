@@ -1,7 +1,7 @@
 module.exports =
   mqtt:
-    host: undefined
+    host: "mosquitto"
     port: 1883
   envisalink:
-    host: undefined
-    password: undefined
+    host: "home"
+    password: "0842"

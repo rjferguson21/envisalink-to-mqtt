@@ -4,23 +4,23 @@ nap = require './lib/nodealarmproxy.js'
 config = require('./conf/config')
 plugin_name = 'envisalink'
 
-if yargs["envisalink-host"]?
-  config.envisalink.host = yargs["envisalink-host"]
-else
-  throw Error("Need to specify envisalink host.")
-
-if yargs["envisalink-password"]?
-  config.envisalink.password = yargs["envisalink-password"]
-else
-  throw Error("Need to specify envisalink password.")
-
-if yargs["mqtt-host"]?
-  config.mqtt.host = yargs["mqtt-host"]
-else
-  throw Error("Need to specify mqtt host.")
-
-if yargs["mqtt-port"]?
-  config.mqtt.port = yargs["mqtt-port"]
+# if yargs["envisalink-host"]?
+#   config.envisalink.host = yargs["envisalink-host"]
+# else
+#   throw Error("Need to specify envisalink host.")
+#
+# if yargs["envisalink-password"]?
+#   config.envisalink.password = yargs["envisalink-password"]
+# else
+#   throw Error("Need to specify envisalink password.")
+#
+# if yargs["mqtt-host"]?
+#   config.mqtt.host = yargs["mqtt-host"]
+# else
+#   throw Error("Need to specify mqtt host.")
+#
+# if yargs["mqtt-port"]?
+#   config.mqtt.port = yargs["mqtt-port"]
 
 client = require('./mqtt').get()
 

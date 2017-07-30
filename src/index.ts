@@ -6,6 +6,7 @@ import { connect, Client } from 'mqtt';
 const client: Client = connect(config.mqtt);
 
 client.on('connect', () => {
+	console.log('connect');
   client.subscribe('envisalink/#');
 	client.publish('envisalink', 'hello envisalink');
 		

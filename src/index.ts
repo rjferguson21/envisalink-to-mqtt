@@ -1,12 +1,13 @@
 import * as nap from 'nodealarmproxy';
 import { ZoneUpdate } from './zoneupdate';
-import { config } from './config';
+import config from './config';
 import { connect, Client } from 'mqtt';
+import * as _ from 'lodash';
 
 const client: Client = connect(config.mqtt);
+let publishOptions = { retain: true };
 
 client.on('connect', () => {
-	console.log('connect');
   client.subscribe('envisalink/#');
 	client.publish('envisalink', 'hello envisalink');
 		
@@ -24,9 +25,16 @@ client.on('connect', () => {
 		logging: false
 	});
 
+	alarm.on('data', (data) => {
+		_.each(data.zone, (value, key) => {
+			let payload = value.send === 'restore' ? '0' : '1';
+			client.publish(`envisalink/${key}`, payload, publishOptions);
+		});
+	});
+
 	alarm.on('zoneupdate', (data: ZoneUpdate) => {
 		if (data.code === '609') {
-			client.publish(`envisalink/${data.zone}`, '1');
+			client.publish(`envisalink/${data.zone}`, '1', publishOptions);
 			console.log(`Zone ${data.zone} is open!`);
 		}
 		else if (data.code === '610') {
@@ -38,9 +46,11 @@ client.on('connect', () => {
 		}
 	});
 });
- 
+
+
 client.on('message', function (topic, message) {
   // message is Buffer 
-  console.log(message.toString());
+  console.log(topic, message.toString());
 })
 
+nap.getCurrent();

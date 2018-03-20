@@ -6,6 +6,19 @@ import * as _ from 'lodash';
 
 const client: Client = connect(config.mqtt);
 let publishOptions = { retain: true };
+const log = function(message) {
+	console.log(message);
+	if (process.env.NIGHTWATCHER_ENV === 'DEV') {
+		console.log(message);
+	}
+}
+client.on('error', (err) => {
+	console.log(`ERROR: ${err} `);
+});
+
+client.on('reconnect', (err) => {
+	console.log(`Trying to reconnect`);
+});
 
 client.on('connect', () => {
   client.subscribe('envisalink/#');
@@ -26,6 +39,7 @@ client.on('connect', () => {
 	});
 
 	alarm.on('data', (data) => {
+		log(data);
 		_.each(data.zone, (value, key) => {
 			let payload = value.send === 'restore' ? '0' : '1';
 			client.publish(`envisalink/${key}`, payload, publishOptions);
@@ -33,16 +47,17 @@ client.on('connect', () => {
 	});
 
 	alarm.on('zoneupdate', (data: ZoneUpdate) => {
+			log(data);
 		if (data.code === '609') {
 			client.publish(`envisalink/${data.zone}`, '1', publishOptions);
-			console.log(`Zone ${data.zone} is open!`);
+			log(`Zone ${data.zone} is open!`);
 		}
 		else if (data.code === '610') {
 			client.publish(`envisalink/${data.zone}`, '0');
-			console.log(`Zone ${data.zone} is closed!`);
+			log(`Zone ${data.zone} is closed!`);
 		}
 		else {
-			console.log(data.code, data.zone);
+			log([data.code, data.zone]);
 		}
 	});
 });
@@ -50,7 +65,16 @@ client.on('connect', () => {
 
 client.on('message', function (topic, message) {
   // message is Buffer 
-  console.log(topic, message.toString());
+  log([topic, message.toString()])
 })
 
 nap.getCurrent();
+
+setInterval(() => {
+	console.log('ping');
+	nap.manualCommand('000', (err) => {
+		if (err) {
+			console.log('Error pinging NAP proxy', err);
+		}
+	});
+}, 10000);

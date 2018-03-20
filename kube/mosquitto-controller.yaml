@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: master
-        image: ansi/mosquitto
+        image: eclipse-mosquitto 
         ports:
         - containerPort: 1883

@@ -22,7 +22,7 @@ client.on('reconnect', (err) => {
 
 client.on('connect', () => {
   client.subscribe('envisalink/#');
-	client.publish('envisalink', 'hello envisalink');
+	// client.publish('envisalink', 'hello envisalink');
 		
 	const alarm = nap.initConfig({ 
 		password: config.password, //replace config.* with appropriate items

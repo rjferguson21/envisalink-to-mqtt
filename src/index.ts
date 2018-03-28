@@ -1,6 +1,6 @@
+import config from './config/config';
 import * as nap from 'nodealarmproxy';
 import { ZoneUpdate } from './zoneupdate';
-import config from './config';
 import { connect, Client } from 'mqtt';
 import * as _ from 'lodash';
 
@@ -22,7 +22,6 @@ client.on('reconnect', (err) => {
 
 client.on('connect', () => {
   client.subscribe('envisalink/#');
-	// client.publish('envisalink', 'hello envisalink');
 		
 	const alarm = nap.initConfig({ 
 		password: config.password, //replace config.* with appropriate items

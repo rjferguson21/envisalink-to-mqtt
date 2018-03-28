@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: envisalink-config
+data:
+  envisalink_password: ''
+  envisalink_serverpassword: ''
+  envisalink_host: ''
+  envisalink_port: ''
+  envisalink_mqtt: 'mqtt://mqtt-master'

@@ -1,10 +1,13 @@
 FROM node
 
+RUN npm install -g npm
+
 WORKDIR /usr/workroot/
 
 COPY package.json .
+COPY package-lock.json .
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 

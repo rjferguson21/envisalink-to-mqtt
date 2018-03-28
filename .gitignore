@@ -2,3 +2,4 @@ node_modules/*
 src/*.js
 kube/envisalink-to-mqtt.config.yaml
 .env
+dist
